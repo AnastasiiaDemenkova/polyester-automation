@@ -4,3 +4,5 @@ pytest-playwright
 requests
 python-dotenv
 allure-pytest
+allure-pytest
+pytest-lxml
