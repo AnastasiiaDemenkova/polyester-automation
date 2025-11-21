@@ -35,3 +35,11 @@ jobs:
         with:
           name: test-results
           path: .
+      - name: Upload Playwright Artifacts (only if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: playwright-artifacts
+          if-no-files-found: ignore
+
