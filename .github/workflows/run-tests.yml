@@ -27,19 +27,29 @@ jobs:
       - name: Add project to PYTHONPATH
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
-      - name: Run tests
-        run: pytest -q
+      - name: Run tests (smoke on PR, full on push)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "🚀 Running SMOKE tests for Pull Request..."
+            pytest -m smoke -q --disable-warnings
+          else
+            echo "🚀 Running FULL test suite on push to main..."
+            pytest -q --disable-warnings
+          fi
 
-      - name: Upload test artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: .
       - name: Upload Playwright Artifacts (only if any)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-artifacts
           path: playwright-artifacts
+          if-no-files-found: ignore
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
           if-no-files-found: ignore
 
