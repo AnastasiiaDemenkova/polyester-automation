@@ -26,8 +26,11 @@ jobs:
       - name: Add project to PYTHONPATH
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
-      - name: Run full regression suite
-        run: pytest -q
+      - name: Run regression tests
+        run: |
+          echo "🚀 Running FULL regression (all tests except smoke)..."
+          pytest -m "not smoke" -q --disable-warnings
+
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
