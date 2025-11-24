@@ -1,26 +1,27 @@
-# Polyester Automation Framework
+# 🧵 Polyester Automation Framework  
+### End-to-End UI + API Test Automation | Playwright + Pytest + Allure + GitHub Actions
 
-[![CI Status](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/tests.yml/badge.svg)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/tests.yml)
+[![CI Pipeline](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/run-tests.yml/badge.svg)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/run-tests.yml)
 [![Nightly Regression](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/nightly.yml/badge.svg)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/nightly.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-Report-blue)](https://anastasiiademenkova.github.io/polyester-automation/allure-report/)
-![Coverage](https://img.shields.io/badge/Coverage-Coming%20Soon-red)
 
-A complete **UI + API automation framework** built from scratch for testing **Polyester.com**, designed to simulate a real-world QA Automation project with **industry-standard CI/CD practices**.
+A complete Python-based UI + API automation framework built from scratch for testing  
+**https://polyester.com** — created to simulate a real professional automation project using modern CI/CD.
 
 ---
 
 ## 🚀 Tech Stack
-
-- **Python + Pytest**
-- **Playwright** (UI automation)
-- **Requests** (API automation)
-- **Allure Reporting**
-- **GitHub Actions (CI/CD)**
-- **Environment-based Testing (dev / preprod / prod)**
+- **Python 3.10**
+- **Pytest** — test runner  
+- **Playwright** — UI test automation  
+- **Requests** — API test automation  
+- **Allure** — reporting  
+- **GitHub Actions** — full CI/CD pipelines  
+- Environment-based test execution (**dev / preprod / prod**)  
 
 ---
 
-## 📁 Project Structure
+# 📁 Project Structure
 
 polyester-automation/
 │
@@ -28,16 +29,22 @@ polyester-automation/
 │ ├── ui/ # UI tests (Playwright)
 │ └── api/ # API tests (Requests)
 │
-├── configs/ # Environment configs (dev / preprod / prod)
+├── configs/ # Environment configs
+│ ├── dev.env
+│ ├── preprod.env
+│ └── prod.env
 │
 ├── utils/
-│ └── env_loader.py # Loads ENV variables dynamically
+│ └── env_loader.py # Loads environment + URLs
 │
 ├── .github/
 │ └── workflows/ # CI/CD pipelines
+│ ├── run-tests.yml # PR + Push tests
+│ ├── nightly.yml # Nightly regression
+│ └── deploy-allure-report.yml
 │
-├── pytest.ini # Pytest config & markers
-├── requirements.txt
+├── pytest.ini # Pytest settings + markers
+├── requirements.txt # Dependencies
 └── README.md
 
 yaml
@@ -45,9 +52,9 @@ Copy code
 
 ---
 
-## 🧪 Running Tests Locally
+# 🧪 Running Tests Locally
 
-### 1. Install dependencies
+### **1. Install dependencies**
 ```bash
 pip install -r requirements.txt
 playwright install
@@ -55,7 +62,7 @@ playwright install
 bash
 Copy code
 pytest
-3. Run smoke tests only
+3. Run smoke tests
 bash
 Copy code
 pytest -m smoke
@@ -64,35 +71,90 @@ bash
 Copy code
 pytest --alluredir=allure-results
 allure serve allure-results
-🔁 CI/CD Pipelines (GitHub Actions)
-✔ Pull Requests
-Runs smoke tests only (fastest feedback).
+🔁 CI/CD Workflows (GitHub Actions)
+✔ On Pull Requests
+Runs smoke tests only
 
-✔ Push to main
-Runs full UI + API suite, uploads Allure results + artifacts.
+Fast validation before merge
 
-✔ Nightly Regression (scheduled)
-Runs full regression, uploads results.
+✔ On Push to main
+Runs UI + API full suite
+
+Generates Allure artifacts
+
+✔ Nightly Regression (Scheduled)
+Runs a full regression suite every night
+
+Uploads Allure results as an artifact
+
+Automatically publishes Allure Report to GitHub Pages
 
 ✔ Allure Report Deployment
-Deploys latest nightly report to GitHub Pages.
+Nightly report is published here:
 
-📊 Allure Report (Nightly)
-👉 Live Report
-https://anastasiiademenkova.github.io/polyester-automation/allure-report/
+👉 https://anastasiiademenkova.github.io/polyester-automation/allure-report/
 
-🗺 Future Enhancements
-Add code coverage (Codecov)
+📊 Example Architecture (CI + Tests)
+mermaid
+Copy code
+flowchart TD
 
-Add Docker support
+A[Developer Commit / Pull Request] --> B[GitHub Actions CI]
 
-Add multi-browser (Chrome, Firefox, Safari)
+B -->|PR| C[Smoke Tests]
+B -->|Push to main| D[UI + API Tests]
+B -->|Nightly| E[Full Regression]
 
-Add Visual Regression Testing
+E --> F[Upload Allure Results]
+F --> G[Deploy Allure Report to GitHub Pages]
 
-Add Load Testing (Locust/k6)
+G --> H[Public Nightly Allure Report]
+🪄 Test Strategy Summary
+✔ UI Testing (Playwright)
+Homepage validation
+
+Navigation
+
+Elements visibility
+
+Mobile/desktop viewport testing
+
+Smoke suite for PRs
+
+Regression for nightly
+
+✔ API Testing (Requests)
+Status codes
+
+Headers
+
+Response validation
+
+Error handling
+
+Contract testing (future)
+
+✔ Non-Functional (Future)
+Performance testing
+
+Load testing (k6 / Locust)
+
+Visual regression
+
+🗺 Roadmap (Planned Enhancements)
+Add Code Coverage (Codecov)
+
+Add Docker setup
+
+Add multi-browser matrix (Chrome, Firefox, WebKit)
+
+Add screenshot-based visual testing
+
+Add data-driven testing
+
+Add retry logic for flaky UI tests
 
 👩‍💻 Author
 Anastasiia Demenkova
-QA Automation Engineer
+Senior QA Automation Engineer
 Santa Clara, CA
