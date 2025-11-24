@@ -1,139 +1,123 @@
 # Polyester Automation Framework
-End-to-End UI and API Test Automation using Playwright, Pytest, Requests, Allure, and GitHub Actions.
 
-This project demonstrates a clean, production-ready Python automation framework with CI/CD integration across environments.
+![CI](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/tests.yml/badge.svg)
+[![Allure Report](https://img.shields.io/badge/Allure-Report-ff69b4.svg)](https://anastasiiademenkova.github.io/polyester-automation/allure-report/)
+![Coverage](https://img.shields.io/badge/Coverage-Coming%20Soon-blue)
+
+End-to-end UI and API automation for Polyester.com using Playwright, Pytest, Requests, Allure, and GitHub Actions. The suite is environment-aware (dev / preprod / prod) and ready for local runs or CI/CD.
+
+---
 
 ## Tech Stack
-- Python 3.10+
-- Pytest (test runner)
-- Playwright (UI automation)
-- Requests (API testing)
-- Allure (reporting)
-- GitHub Actions (CI/CD)
-- Environment-based test execution (dev, preprod, prod)
 
-## Project Structure
+- Python 3.10+ with Pytest
+- Playwright via `pytest-playwright` for UI flows
+- Requests for API checks
+- Allure for reporting
+- GitHub Actions for CI/CD
+- Config-driven environments: `dev`, `preprod`, `prod`
+
+---
+
+## Repository Layout
+
+```
 polyester-automation/
-│
+├── configs/              # Environment configs (.env style)
 ├── tests/
-│ ├── ui/ # Playwright UI test suite
-│ └── api/ # API tests using requests
-│
-├── configs/ # Environment configurations
-│ ├── dev.env
-│ ├── preprod.env
-│ └── prod.env
-│
+│   ├── api/              # API checks (Requests)
+│   └── ui/               # UI tests (Playwright)
 ├── utils/
-│ └── env_loader.py # Loads environment variables and URLs
-│
-├── .github/
-│ └── workflows/ # GitHub Actions pipeline files
-│
+│   └── env_loader.py     # Loads BASE_URL from configs/<env>.env
+├── pytest.ini            # Pytest defaults + markers + Allure dir
+├── playwright.config.py  # Playwright artifacts on failure
 ├── requirements.txt
 └── README.md
+```
 
-markdown
-Copy code
+---
 
-## Test Coverage
+## Getting Started
 
-### UI Tests (Playwright)
-- Login flow validation
-- Navigation checks
-- Regression validation
-- Error and edge-case flows
-- Browser compatibility
+1) Create and activate a virtual environment (recommended):
 
-### API Tests (Requests)
-- Positive response validation
-- Invalid API key returns 401
-- Missing Referer header returns 401
-- No headers returns 401
-- Basic performance threshold (< 5 seconds)
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-## Installation
-Install all dependencies:
+2) Install dependencies and Playwright browsers:
+
+```bash
 pip install -r requirements.txt
-
-yaml
-Copy code
-
-Install Playwright browsers:
 playwright install
+```
 
-python
-Copy code
+---
 
 ## Running Tests
 
-Run all tests:
-pytest
+- Full suite: `pytest`
+- Smoke subset: `pytest -m smoke`
+- UI only: `pytest tests/ui`
+- API only: `pytest tests/api`
 
-sql
-Copy code
+### Choose an Environment
 
-Run only UI tests:
-pytest -m ui
+Configs live in `configs/<env>.env` (`dev`, `preprod`, `prod`). Tests currently call `load_environment("preprod")`; update that helper call in tests (or parameterize it) to target another environment.
 
-sql
-Copy code
+Example config (`configs/dev.env`):
 
-Run only API tests:
-pytest -m api
+```
+ENV=dev
+BASE_URL=https://polyester.com
+```
 
-yaml
-Copy code
+### Allure Reporting
 
-Generate Allure report:
+```bash
 pytest --alluredir=allure-results
-allure serve allure-results
+allure serve allure-results   # requires Allure CLI
+```
 
-powershell
-Copy code
+---
 
-## Environment Switching
-Set the environment before running tests:
-ENV=dev pytest
+## CI/CD
 
-yaml
-Copy code
+- Pull requests: smoke tests for quick validation.
+- Push to `main`: full UI + API suite with Allure artifacts.
+- Nightly regression: full run; publishes Allure report to GitHub Pages.
+- Latest nightly report: https://anastasiiademenkova.github.io/polyester-automation/allure-report/
 
-Environment loader:
-utils/env_loader.py
+---
 
-markdown
-Copy code
+## Coverage Highlights (current tests)
 
-## CI/CD Pipeline
-GitHub Actions pipeline includes:
-- Installing dependencies
-- Running UI and API tests
-- Saving Allure reports as artifacts
-- Nightly regression execution
+- UI: Homepage title verification (Playwright)
+- API: Base URL status code check (Requests)
 
-Workflow file location:
-.github/workflows/tests.yml
+---
 
-markdown
-Copy code
+## Pytest Markers
 
-## Reports
-- Allure test reports
-- Screenshots on UI test failure
-- API logs and response validation
-- Optional Playwright trace artifacts
+- `ui` — UI flows in Playwright
+- `api` — API checks with Requests
+- `smoke` — critical path coverage
+- `regression` — broader suite
+
+---
 
 ## Future Enhancements
-- Add Docker support
-- Add Playwright trace viewer uploads
-- Parallel test execution in CI
-- Expand API coverage
-- Add LLM response validation for chatbot testing
+
+- Dockerized local runs
+- Parallel and matrix execution (multi-browser)
+- Expanded API coverage and visual regression
+- Playwright trace uploads in CI
+
+---
 
 ## Author
-Created by Anastasiia Demenkova  
-Senior QA Engineer specializing in Web, Mobile, API, and AI/LLM Quality Assurance.
 
+Anastasiia Demenkova — QA Automation Engineer (Santa Clara, CA)  
 LinkedIn: https://www.linkedin.com/in/anastasiia-demenkova-036a9b120  
 Portfolio: https://anastasiiademenkova.com
