@@ -8,31 +8,24 @@ on:
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download Allure Results
+      - name: Download nightly results artifact
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
-          path: allure-results
+          name: nightly-results
+          path: nightly-results
 
-      - name: Install Allure
+      - name: Extract report
         run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jre unzip
-          curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/download/2.20.1/allure-2.20.1.zip
-          unzip allure.zip -d /opt/allure
-          sudo ln -s /opt/allure/allure-2.20.1/bin/allure /usr/bin/allure
+          ls -R nightly-results
+          rm -rf ./allure-report
+          cp -r nightly-results/allure-report ./allure-report
 
-      - name: Generate Allure Report
-        run: |
-          allure generate allure-results -o allure-report --clean
-
-      - name: Upload Report as Artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: nightly-allure-report
-          path: allure-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
 
