@@ -1,160 +1,139 @@
-# 🧵 Polyester Automation Framework  
-### End-to-End UI + API Test Automation | Playwright + Pytest + Allure + GitHub Actions
+# Polyester Automation Framework
+End-to-End UI and API Test Automation using Playwright, Pytest, Requests, Allure, and GitHub Actions.
 
-[![CI Pipeline](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/run-tests.yml/badge.svg)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/run-tests.yml)
-[![Nightly Regression](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/nightly.yml/badge.svg)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/nightly.yml)
-[![Allure Report](https://img.shields.io/badge/Allure-Report-blue)](https://anastasiiademenkova.github.io/polyester-automation/allure-report/)
+This project demonstrates a clean, production-ready Python automation framework with CI/CD integration across environments.
 
-A complete Python-based UI + API automation framework built from scratch for testing  
-**https://polyester.com** — created to simulate a real professional automation project using modern CI/CD.
+## Tech Stack
+- Python 3.10+
+- Pytest (test runner)
+- Playwright (UI automation)
+- Requests (API testing)
+- Allure (reporting)
+- GitHub Actions (CI/CD)
+- Environment-based test execution (dev, preprod, prod)
 
----
-
-## 🚀 Tech Stack
-- **Python 3.10**
-- **Pytest** — test runner  
-- **Playwright** — UI test automation  
-- **Requests** — API test automation  
-- **Allure** — reporting  
-- **GitHub Actions** — full CI/CD pipelines  
-- Environment-based test execution (**dev / preprod / prod**)  
-
----
-
-# 📁 Project Structure
-
+## Project Structure
 polyester-automation/
 │
 ├── tests/
-│ ├── ui/ # UI tests (Playwright)
-│ └── api/ # API tests (Requests)
+│ ├── ui/ # Playwright UI test suite
+│ └── api/ # API tests using requests
 │
-├── configs/ # Environment configs
+├── configs/ # Environment configurations
 │ ├── dev.env
 │ ├── preprod.env
 │ └── prod.env
 │
 ├── utils/
-│ └── env_loader.py # Loads environment + URLs
+│ └── env_loader.py # Loads environment variables and URLs
 │
 ├── .github/
-│ └── workflows/ # CI/CD pipelines
-│ ├── run-tests.yml # PR + Push tests
-│ ├── nightly.yml # Nightly regression
-│ └── deploy-allure-report.yml
+│ └── workflows/ # GitHub Actions pipeline files
 │
-├── pytest.ini # Pytest settings + markers
-├── requirements.txt # Dependencies
+├── requirements.txt
 └── README.md
+
+markdown
+Copy code
+
+## Test Coverage
+
+### UI Tests (Playwright)
+- Login flow validation
+- Navigation checks
+- Regression validation
+- Error and edge-case flows
+- Browser compatibility
+
+### API Tests (Requests)
+- Positive response validation
+- Invalid API key returns 401
+- Missing Referer header returns 401
+- No headers returns 401
+- Basic performance threshold (< 5 seconds)
+
+## Installation
+Install all dependencies:
+pip install -r requirements.txt
 
 yaml
 Copy code
 
----
-
-# 🧪 Running Tests Locally
-
-### **1. Install dependencies**
-```bash
-pip install -r requirements.txt
+Install Playwright browsers:
 playwright install
-2. Run all tests
-bash
+
+python
 Copy code
+
+## Running Tests
+
+Run all tests:
 pytest
-3. Run smoke tests
-bash
+
+sql
 Copy code
-pytest -m smoke
-4. Generate Allure report
-bash
+
+Run only UI tests:
+pytest -m ui
+
+sql
 Copy code
+
+Run only API tests:
+pytest -m api
+
+yaml
+Copy code
+
+Generate Allure report:
 pytest --alluredir=allure-results
 allure serve allure-results
-🔁 CI/CD Workflows (GitHub Actions)
-✔ On Pull Requests
-Runs smoke tests only
 
-Fast validation before merge
-
-✔ On Push to main
-Runs UI + API full suite
-
-Generates Allure artifacts
-
-✔ Nightly Regression (Scheduled)
-Runs a full regression suite every night
-
-Uploads Allure results as an artifact
-
-Automatically publishes Allure Report to GitHub Pages
-
-✔ Allure Report Deployment
-Nightly report is published here:
-
-👉 https://anastasiiademenkova.github.io/polyester-automation/allure-report/
-
-📊 Example Architecture (CI + Tests)
-mermaid
+powershell
 Copy code
-flowchart TD
 
-A[Developer Commit / Pull Request] --> B[GitHub Actions CI]
+## Environment Switching
+Set the environment before running tests:
+ENV=dev pytest
 
-B -->|PR| C[Smoke Tests]
-B -->|Push to main| D[UI + API Tests]
-B -->|Nightly| E[Full Regression]
+yaml
+Copy code
 
-E --> F[Upload Allure Results]
-F --> G[Deploy Allure Report to GitHub Pages]
+Environment loader:
+utils/env_loader.py
 
-G --> H[Public Nightly Allure Report]
-🪄 Test Strategy Summary
-✔ UI Testing (Playwright)
-Homepage validation
+markdown
+Copy code
 
-Navigation
+## CI/CD Pipeline
+GitHub Actions pipeline includes:
+- Installing dependencies
+- Running UI and API tests
+- Saving Allure reports as artifacts
+- Nightly regression execution
 
-Elements visibility
+Workflow file location:
+.github/workflows/tests.yml
 
-Mobile/desktop viewport testing
+markdown
+Copy code
 
-Smoke suite for PRs
+## Reports
+- Allure test reports
+- Screenshots on UI test failure
+- API logs and response validation
+- Optional Playwright trace artifacts
 
-Regression for nightly
+## Future Enhancements
+- Add Docker support
+- Add Playwright trace viewer uploads
+- Parallel test execution in CI
+- Expand API coverage
+- Add LLM response validation for chatbot testing
 
-✔ API Testing (Requests)
-Status codes
+## Author
+Created by Anastasiia Demenkova  
+Senior QA Engineer specializing in Web, Mobile, API, and AI/LLM Quality Assurance.
 
-Headers
-
-Response validation
-
-Error handling
-
-Contract testing (future)
-
-✔ Non-Functional (Future)
-Performance testing
-
-Load testing (k6 / Locust)
-
-Visual regression
-
-🗺 Roadmap (Planned Enhancements)
-Add Code Coverage (Codecov)
-
-Add Docker setup
-
-Add multi-browser matrix (Chrome, Firefox, WebKit)
-
-Add screenshot-based visual testing
-
-Add data-driven testing
-
-Add retry logic for flaky UI tests
-
-👩‍💻 Author
-Anastasiia Demenkova
-Senior QA Automation Engineer
-Santa Clara, CA
+LinkedIn: https://www.linkedin.com/in/anastasiia-demenkova-036a9b120  
+Portfolio: https://anastasiiademenkova.com
