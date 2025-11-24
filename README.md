@@ -1,8 +1,9 @@
 # Polyester Automation Framework
 
-![CI](https://github.com/AnastasiiaDemenkova/polyester-automation/actions/workflows/tests.yml/badge.svg)
-[![Allure Report](https://img.shields.io/badge/Allure-Report-ff69b4.svg)](https://anastasiiademenkova.github.io/polyester-automation/allure-report/)
-![Coverage](https://img.shields.io/badge/Coverage-Coming%20Soon-blue)
+[![CI](https://img.shields.io/badge/CI-GitHub_Actions-blue)](https://github.com/AnastasiiaDemenkova/polyester-automation/actions)
+[![Allure Report](https://img.shields.io/badge/Allure-Report-blue)]()
+[![Coverage](https://img.shields.io/badge/Coverage-Coming_Soon-lightgray)]()
+
 
 End-to-end UI and API automation for Polyester.com using Playwright, Pytest, Requests, Allure, and GitHub Actions. The suite is environment-aware (dev / preprod / prod) and ready for local runs or CI/CD.
 
